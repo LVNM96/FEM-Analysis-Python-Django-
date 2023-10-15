@@ -1,0 +1,60 @@
+{% extends 'prvi/LS_base.html' %} 
+
+{% block title %} Naslovna {% endblock %}
+
+{%block content %}
+<div class="row mt-5">
+    <div class="col-12 col-md-4 mx-md-auto">
+      <h1>Ova stranica omogućuje izračun naprezanja i pomaka ploče na slici koristeći metodu konačnih elemenata</h1>   
+  
+      
+        
+        {% load static %} <img src="{% static "prvi/Ploca.png" %}" alt="home" />
+        <p>Ulazni podaci:<br/></p>
+        <p>Koordinate čvorova - u xy koordinatnom sustavu, gdje se prvo unosi x koordinata<br /></p>
+        <p>Uvjeti oslanjanja - unose se vrijednosti 0 ili 1, gdje 0 predstavlja smjer u kojem je pomak moguć, a 1 onemogućen pomak u danom smjeru<br /></p>
+        <p>Sile - Sile u čvorovima<br /></p>
+        <p>Youngouv modul elastičnosti [Pa], Poissonov koeficijent i debljina [m]<br /></p>      
+        <h2>1. Učitavanje tekstualne datoteke sa podacima:</h2>
+        <img src="{% static "prvi/tekst.png" %}" alt="home" />
+        <p>Na slici je prikazan način na koji bi datoteka trebala izgledati kako bi se podaci učitali ispravno:</p>
+        Prvo se unose vrijednosti matrice XYZ, zatim uvjeti oslanjanja (BC) te sile u čvorovima.
+        Posljednje su upisani elementi matrice ELDATA što su redom: Youngov modul elastičnosti, Poissonov koeficijent te debljina.
+        <p></p>
+        
+        <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ formUpload.file.label_tag }}
+        {{ formUpload.file }}
+        <button type="submit">Učitaj</button>
+      </form>          
+        
+        <p></p>        
+        <h3>2. Ručni unos podataka:</h3>
+        <form method="POST">
+          {%csrf_token %}
+          <div style="display: flex; flex-direction: row;">
+            <div style="margin-right: 10px;">
+                <p>Unesite početne koordinate pravokutne/kvadratne ploče:</p>
+                {{ formXYZ.as_p }}
+            </div>
+            <div style="margin-right: 10px;">
+                <p>Unesite uvjete oslanjanja:</p>
+                {{ formBC.as_p }}
+            </div>
+            <div style="margin-right: 10px;">
+                <p>Unesite sile:</p>
+                {{ formFORCE.as_p }}
+            </div>
+            <div>
+                <p>Unesite Youngov modul elastičnosti, Poissonov koeficijent i debljinu:</p>
+                {{ formELDATA.as_p }}
+            </div>
+        </div>
+        <button type="submit">Potvrdi</button>
+      </form>      
+
+  </div>
+    </div>  
+
+  {% endblock %}

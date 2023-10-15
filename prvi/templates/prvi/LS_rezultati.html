@@ -1,0 +1,68 @@
+{% extends 'prvi/LS_base.html' %}
+
+{%block content %}
+
+<div class="row mt-5">
+    <div class="col-12 col-md-4 mx-md-auto">
+        <h1><table>
+            POMACI:
+            {% for row in DISP %}
+              <tr>
+              {% for val in row %}
+                <td>{{ val }}</td>
+              {% endfor %}
+              </tr>
+            {% endfor %}
+            </table>
+        </h1>    
+        <h2>
+          
+          <style>
+            table {
+              width: 100%;
+              border-collapse: collapse;
+              margin-bottom: 20px;
+            }
+          
+            th, td {
+              padding: 8px;
+              text-align: left;
+              border: 1px solid #f5f2f2;
+            }
+          
+           
+          </style>
+          
+          <h2>Naprezanja:</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Element 1</th>
+                <th>Element 2</th>
+                
+              </tr>
+            </thead>
+            <tbody>
+              {% for row in Stress %}
+              <tr>
+                {% for val2 in row %}
+                <td>{{ val2 }}</td>
+                {% endfor %}
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% load static %} <img src="{%static "prvi/xyz_plot.png" %}" alt="home"/>
+        <p></p> 
+        * Pomaci su uvećani 10000 puta kako bi bili vidljivi
+        <p></p>        
+        
+        <a href="{% url 'preuzimanje' %}" download>
+          <button>Preuzimanje tekstualne datoteke</button>
+        </a>
+        <p></p>
+        <a href="{% url 'index'%}">Povratak</a>
+    </div>
+</div>
+
+{% endblock content %}
